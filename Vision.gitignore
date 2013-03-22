@@ -1,0 +1,264 @@
+#names(db)[1] "ID"       "Class"    "Sex"      "DOB"     
+#[5] "Age"      "Race"     "Marriage" "Occ"     
+#[9] "Edu"      "Baddress" "Bcode"    "District"
+#[13] "DOD"      "DODyy"    "DODmm"    "DODdd"   
+#[17] "I"        "J"   
+library(ggplot2)
+setwd("F:/Khaki/CVD&RespiratoryDisease/Visualization/")
+#db <- read.csv("db2.csv")
+#for (i in 1:nrow(db)) {
+#  if(is.na(db$I[i])==T) { db$I[i] <- 0}
+#}
+#db <- db[,-18]
+#write.csv(db,"db2.csv")
+db <- read.csv("db2.csv")
+#plot1
+hist(db$DODyy,col="blue")#plot origin
+hist.DODyy1 <- ggplot(db, aes(DODyy,fill=factor(Sex)))
+#par(mfrow=c(1,2))
+xlab <- "Year of Death"
+ylab <- "count"
+title <- "Death Cases By Year"
+png(paste(title,".png",sep=""),width=1000,height=800)
+hist.DODyy1 +geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot2
+xlab <- "Year of Death"
+ylab <- "ratio"
+title <- "Death Cases Sex Percentage by Year"
+png(paste(title,".png",sep=""),width=1000,height=800)
+hist.DODyy1 + geom_bar(position='fill',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot3
+xlab <- "Year of Death"
+ylab <- "Age"
+title <- "Death Cases by Age"
+png(paste(title,".png",sep=""),width=1000,height=800)
+scatter.DODyy.Age <- ggplot(data=db, mapping=aes(x=DODyy,y=Age))
+scatter.DODyy.Age + geom_point(aes(colour=factor(Sex)))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#Remove Death Cases before 2010;
+db.new <- (db[db$DODyy>2009,])
+write.csv(db.new,"db2_new.csv")
+db.new <- read.csv("db2_new.csv")
+#plot1
+xlab <- "Year of Death"
+ylab <- "count"
+title <- "Death Cases By Year2010-2013"
+png(paste(title,".png",sep=""),width=1000,height=800)
+
+hist.DODyy1.new <- ggplot(db.new, aes(DODyy,fill=factor(Sex)))
+hist.DODyy1.new + geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot1.1
+xlab <- "Year of Death"
+ylab <- "count"
+title <- "Death Cases(CVD) By Year2010-2013"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$I==1,], aes(DODyy,fill=factor(Sex))) + geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot1.2
+xlab <- "Year of Death"
+ylab <- "count"
+title <- "Death Cases(Resp.D) By Year2010-2013"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$I==0,], aes(DODyy,fill=factor(Sex))) + geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot2 ###
+xlab <- "Year of Death"
+ylab <- "Sex Percentage"
+title <- "Death Cases Sex Percentage by Year2010-2013"
+png(paste(title,".png",sep=""),width=1000,height=800)
+hist.DODyy1.new + geom_bar(position='fill',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot3 blank
+#png("Death Cases by Age2010-2013.png",width=1000,height=800)
+#scatter.DODyy.Age.new <- ggplot(data=db.new[db.new$I==0,], mapping=aes(x=DODyy,y=Age))
+#scatter.DODyy.Age.new + geom_point(aes(colour=factor(Sex)))#+scale_color_manual(values=c("blue2","red4"))
+#dev.off()
+
+#plot4
+xlab <- "Age of Death"
+ylab <- "count"
+title <- "Histogram of Annual Death Cases(CVD & Resp.D) by Sex 2010-2013"
+library(plyr)
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new, aes(x=Age, fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity") + ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+
+#plot4.1
+xlab <- "Age of Death"
+ylab <- "count"
+title <- "Histogram of Annual Death Cases(Resp.D) by Sex 2010-2013"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$I==0,], aes(x=Age, fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot4.2
+xlab <- "Age of Death"
+ylab <- "count"
+title <- "Histogram of Annual Death Cases(CVD) by Sex 2010-2013"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$I==1,], aes(x=Age, fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_continuous(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot5
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(CVD & Resp.D) by Sex 2010"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2010,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(CVD & Resp.D) by Sex 2011"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2011,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(CVD & Resp.D) by Sex 2012"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2012,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot5.1
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(CVD) by Sex 2010"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2010 & db.new$I==1,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(CVD) by Sex 2011"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2011 & db.new$I==1,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(CVD) by Sex 2012"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2012 & db.new$I==1,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot5.2
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(Resp.D) by Sex 2010"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2010 & db.new$I==0,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(Resp.D) by Sex 2011"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2011 & db.new$I==0,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+xlab <- "Month of Death"
+ylab <- "count"
+title <- "Histogram of Monthly Death Cases(Resp.D) by Sex 2012"
+png(paste(title,".png",sep=""),width=1000,height=800)
+ggplot(db.new[db.new$DODyy==2012 & db.new$I==0,], aes(x=factor(DODmm),fill=Sex)) + geom_histogram(binwidth=.5, alpha=.5, position="identity")+ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)
+dev.off()
+#plot6.0
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (CVD & Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1500,height=800)
+ggplot(db.new, aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot6.0.1
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Male Death Cases' Age Distribution (CVD & Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1500,height=800)
+ggplot(db.new[db.new$Sex=="男",], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot6.0.2
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Female Death Cases' Age Distribution (CVD & Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1500,height=800)
+ggplot(db.new[db.new$Sex!="男",], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot6.1
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (CVD) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1500,height=800)
+ggplot(db.new[db.new$I==1,], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot6.1.1
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Male Death Cases' Age Distribution (CVD) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1500,height=800)
+ggplot(db.new[db.new$I==1 & db.new$Sex=="男",], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot6.1.2
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Female Death Cases' Age Distribution (CVD) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1500,height=800)
+ggplot(db.new[db.new$I==1 & db.new$Sex!="男",], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot6.2
+xlab <- "Districts of Beijing"
+ylab <- "Count"
+title <- "Histogram of Death Cases (CVD & Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1200,height=800)
+ggplot(db.new, aes(x=factor(District),fill=Sex)) +geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
+dev.off()
+#plot6.2.1
+xlab <- "Districts of Beijing"
+ylab <- "Count"
+title <- "Histogram of Death Cases (CVD) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1200,height=800)
+ggplot(db.new[db.new$I==1,], aes(x=factor(District),fill=Sex)) +geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
+dev.off()
+#plot6.2.2
+xlab <- "Districts of Beijing"
+ylab <- "Count"
+title <- "Histogram of Death Cases (Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1200,height=800)
+ggplot(db.new[db.new$I==0,], aes(x=factor(District),fill=Sex)) +geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
+dev.off()
+
+
+
+#plot7
+xlab <- "Occupation"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (CVD & Resp.D) of Different Occupation"
+png(paste(title,".png",sep=""),width=20000,height=800)
+ggplot(db.new, aes(x=Occ,y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot7.0.1
+xlab <- "Occupation"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (CVD) of Different Occupation"
+png(paste(title,".png",sep=""),width=20000,height=800)
+ggplot(db.new[db.new$I==1,], aes(x=Occ,y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
+#plot7.0.2
+xlab <- "Occupation"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (Resp.D) of Different Occupation"
+png(paste(title,".png",sep=""),width=20000,height=800)
+ggplot(db.new[db.new$I==0,], aes(x=Occ,y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
+dev.off()
