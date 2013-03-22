@@ -262,3 +262,16 @@ title <- "Death Cases' Age Distribution (Resp.D) of Different Occupation"
 png(paste(title,".png",sep=""),width=20000,height=800)
 ggplot(db.new[db.new$I==0,], aes(x=Occ,y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
 dev.off()
+#########################################
+###########################################
+
+
+
+
+
+setwd("F:/Khaki/CVD&RespiratoryDisease/Visualization/")
+db.new <- read.csv("db2_new.csv")
+CVD.RD<- as.data.frame(table(db.new$DOD))
+png("Death Case Number of CVD & Resp.D.png",width=2000,height=2000)
+calendarHeat(CVD.RD$Var1, CVD.RD$Freq ,color="r2b",varname="Death Case Number of CVD & Resp.D")
+dev.off()
