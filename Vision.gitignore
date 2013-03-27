@@ -238,7 +238,33 @@ xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台�
 png(paste(title,".png",sep=""),width=1200,height=800)
 ggplot(db.new[db.new$I==0,], aes(x=factor(District),fill=Sex)) +geom_bar(position='dodge',alpha=0.5)+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
 dev.off()
-
+#plot6.3
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (CVD & Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1200,height=800)
+ggplot(db.new, aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
+dev.off()
+#plot6.3.1
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (CVD) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1200,height=800)
+ggplot(db.new[db.new$I==1,], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
+dev.off()
+#plot6.3.2
+xlab <- "Districts of Beijing"
+ylab <- "Age"
+title <- "Death Cases' Age Distribution (Resp.D) in Different Districts"
+xgroup <- c(110101 ,110102 ,110103 ,110104 ,110105 ,110106 ,110107 ,110108 ,110109 ,110111 ,110112 ,110113 ,110114 ,110115 ,110116 ,110117 ,110228 ,110229)
+xnames <- c("东城区","西城区","崇文区","宣武区","朝阳区","丰台区","石景山区","海淀区","门头沟区","房山区","通州区","顺义区","昌平区","大兴区","怀柔区","平谷区","密云县","延庆县")
+png(paste(title,".png",sep=""),width=1200,height=800)
+ggplot(db.new[db.new$I==0,], aes(x=factor(District),y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)+scale_x_discrete(name=xlab,breaks=xgroup,labels=xnames)+scale_y_continuous(name=ylab)
+dev.off()
 
 
 #plot7
@@ -261,17 +287,4 @@ ylab <- "Age"
 title <- "Death Cases' Age Distribution (Resp.D) of Different Occupation"
 png(paste(title,".png",sep=""),width=20000,height=800)
 ggplot(db.new[db.new$I==0,], aes(x=Occ,y=Age,fill=Sex)) +geom_point(aes(colour=Sex))+ ggtitle(title)+theme(plot.title = element_text(lineheight=.8, face="bold"),axis.title.x = element_text(face="bold", colour="#990000", size=20),axis.text.x  = element_text(size=16),axis.title.y = element_text(face="bold", colour="#990000", size=20),axis.text.y  = element_text(size=16),legend.title = element_text(colour="blue", size=16, face="bold"),legend.text = element_text(colour="blue", size = 16))+scale_x_discrete(name=xlab)+scale_y_continuous(name=ylab)+geom_boxplot() +guides(fill=FALSE)
-dev.off()
-#########################################
-###########################################
-
-
-
-
-
-setwd("F:/Khaki/CVD&RespiratoryDisease/Visualization/")
-db.new <- read.csv("db2_new.csv")
-CVD.RD<- as.data.frame(table(db.new$DOD))
-png("Death Case Number of CVD & Resp.D.png",width=2000,height=2000)
-calendarHeat(CVD.RD$Var1, CVD.RD$Freq ,color="r2b",varname="Death Case Number of CVD & Resp.D")
 dev.off()
